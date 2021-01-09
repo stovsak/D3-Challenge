@@ -96,5 +96,18 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     });
 
 // Create Axes
+//=====================
+chartGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left + 40)
+    .attr("x", 0 -(chartHeight / 2))
+    .attr("class", "axisText")
+    .text("Lacks Healthcare (%)");
+chartGroup.append("text")
+    .attr("transform", `translate(${chartWidth / 2},  ${chartHeight + margin.top +30})`)
+    .attr("class", "axisText")
+    .text("Poverty (%)");
+
+//States in Circles
 
 })
