@@ -57,8 +57,8 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     .call(yAxis);
 
 // Circle Creatation
-      //===================
-      var circlesGroup = chartGroup.selectAll("circle")
+    //===================
+    var circlesGroup = chartGroup.selectAll("circle")
       .data(censusData)
       .enter()
       .append("circle")
@@ -70,13 +70,31 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
       .attr("stroke", "black");
 
 // Tooltip time
-      //====================
-      var toolTip = d3.tip()
+    //====================
+    var toolTip = d3.tip()
       .attr("class", "d3-tip")
       .offset([0,0])
       .html(function(d) {
           return(`<strong>${d.state}</br></br>Lacks Healthcare (%):</br>${d.healthcare}</br></br>Poverty (%):</br> ${d.poverty}<strong>`);
       
       });
+// Add tooltip to the chart
+    //=========================
+    svg.call(toolTip);
+
+    // Mouseclick
+    circlesGroup.on("click", function(data){
+        toolTip.show(data, this);
+    });
+    // Mouseover
+    circlesGroup.on("mouseover", function(data) {
+        toolTip.show(data, this);
+    });
+    // Mouseout
+    circlesGroup.on("mouseout", function(data) {
+        toolTip.hide(data, this);
+    });
+
+// Create Axes
 
 })
