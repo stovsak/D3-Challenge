@@ -98,16 +98,35 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
 // Create Axes
 //=====================
 chartGroup.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left + 40)
-    .attr("x", 0 -(chartHeight / 2))
-    .attr("class", "axisText")
-    .text("Lacks Healthcare (%)");
+  .attr("transform", "rotate(-90)")
+  .attr("y", 0 - margin.left + 40)
+  .attr("x", 0 -(chartHeight / 2))
+  .attr("class", "axisText")
+  .text("Lacks Healthcare (%)");
 chartGroup.append("text")
-    .attr("transform", `translate(${chartWidth / 2},  ${chartHeight + margin.top +30})`)
-    .attr("class", "axisText")
-    .text("Poverty (%)");
+  .attr("transform", `translate(${chartWidth / 2},  ${chartHeight + margin.top +30})`)
+  .attr("class", "axisText")
+  .text("Poverty (%)");
 
 //States in Circles
+chartGroup.append("text")
+  .attr("class", "stateText")
+  .style("font-size", "9px")
+  .style("font-weight", "bold")
+  .selectAll("tspan")
+  .data(censusData)
+  .enter()
+  .append("tspan")
+  .attr("x", function(data) {
+      return xlinearScale(data.poverty);
+  })
+   .attr("y", function(data) {
+       return ylinearScale(data.healthcare -0.2);
+   })
+   .text(function(data) {
+       return data.abbr
+   });
 
-})
+}).catch(function(error) {
+    console.log(error);
+});
