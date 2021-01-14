@@ -5,8 +5,8 @@ var svgHeight = 500;
 
 var margin = { top:20, right: 80, left: 100, bottom: 100 };
 
-var width = svgWidth - margin.left - margin.right;
-var height = svgHeight - margin.top - margin.bottom;
+var chartWidth = svgWidth - margin.left - margin.right;
+var chartHeight = svgHeight - margin.top - margin.bottom;
 
 // Create an SVG wrapper and append SVG group to the chart
 var svg = d3.select("#scatter").append("svg")
@@ -17,7 +17,7 @@ var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // CSV retreival and execution
-d3.csv("data.csv").then(function(censusData) {
+d3.csv("assets/data/data.csv").then(function(censusData) {
 
     // Data
     console.log(censusData);
@@ -34,12 +34,12 @@ d3.csv("data.csv").then(function(censusData) {
     //==================
     
     var ylinearScale = d3.scaleLinear()
-    .domain([d3.min(censusData, d => d.heathcare) -2, d3.max(censusData, d => d.heathcare) +2])
+    .domain([d3.min(censusData, d => d.healthcare)-2, d3.max(censusData, d => d.healthcare)+2])
     .range([chartHeight, 0]);
 
     var xlinearScale = d3.scaleLinear()
-        .domain([d3.min(censusData, d => d.poverty) -1, d3.max(censusData, d => d.poverty) +1])
-        .range([0, chartwidth]);
+        .domain([d3.min(censusData, d => d.poverty)-1, d3.max(censusData, d => d.poverty)+1])
+        .range([0, chartWidth]);
 
 // Axis functions
     //====================
@@ -62,11 +62,11 @@ d3.csv("data.csv").then(function(censusData) {
       .data(censusData)
       .enter()
       .append("circle")
-      .attr("cy", d => xlinearScale(d.healthcare))
-      .attr("cx", d => ylinearScale(d.poverty))
+      .attr("cy", d => ylinearScale(d.healthcare))
+      .attr("cx", d => xlinearScale(d.poverty))
       .attr("r", "10")
       .attr("opacity", "0.75")
-      .attr("class", stateCircle)
+      .attr("class", "stateCircle")
       .attr("stroke", "black");
 
 // Tooltip time
